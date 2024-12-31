@@ -9,6 +9,7 @@ import morgan from "morgan";
 import { nodeEnv, port } from "./config/config.js";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
+import taskRoutes from "./routes/taskRoute.js";
 
 const app = express();
 app.use(cookieParser());
@@ -32,6 +33,7 @@ app.use(limiter);
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/tasks", taskRoutes);
 
 app.use((err, req, res, next) => {
   console.error(chalk.red(err.stack));

@@ -5,9 +5,6 @@ const createTask = async (req, res) => {
     const { title, description, due } = req.body;
     const user = req.user;
 
-    console.log(user);
-    console.log(new Date().toLocaleDateString());
-
     const task = new Task({ title, description, due, user });
 
     await task.save();
@@ -20,4 +17,17 @@ const createTask = async (req, res) => {
   }
 };
 
-export { createTask };
+const tasks = async (req, res) => {
+  try {
+    const user = req.user;
+    const tasks = await Task.find({ user }).sort({ createdAt: - 1 });
+
+    res.status(200).json({ tasks });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error fetching tasks Internal server error" });
+  }
+};
+
+export { createTask, tasks };

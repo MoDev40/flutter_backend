@@ -20,9 +20,9 @@ const createTask = async (req, res) => {
 const tasks = async (req, res) => {
   try {
     const user = req.user;
-    const tasks = await Task.find({ user }).sort({ createdAt: - 1 });
+    const tasks = await Task.find({ user }).sort({ createdAt: -1 });
 
-    res.status(200).json({ tasks });
+    res.status(200).json(tasks);
   } catch (error) {
     res
       .status(500)

@@ -30,4 +30,25 @@ const tasks = async (req, res) => {
   }
 };
 
-export { createTask, tasks };
+const editTask = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const { title, due } = req.body;
+
+    const user = req.user;
+
+    await Task.findOneAndUpdate(
+      { $and: [{ user }, { _id: id }] },
+      { $set: { title, due } }
+    );
+
+    res.status(200).json({ message: "Successfully updated" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error editing tasks Internal server error" });
+  }
+};
+
+export { createTask, tasks, editTask };

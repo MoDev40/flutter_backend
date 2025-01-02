@@ -1,4 +1,5 @@
 import Task from "../models/task.js";
+import { dateSpecified } from "../utils/utils.js";
 
 const createTask = async (req, res) => {
   try {
@@ -88,4 +89,26 @@ const deleteTask = async (req, res) => {
   }
 };
 
-export { createTask, tasks, editTask, isDoneTask, deleteTask };
+const topDailyTasks = async (req, res) => {
+  try {
+    const user = req.user;
+
+    const day = new Date();
+
+    const { startOfDay, endOfDay } = dateSpecified(day);
+
+    const tasks = await Task.find({
+      $and: [{ user }, { createdAt: { $gt: startOfDay, $lte: endOfDay } }],
+    })
+      .sort({ createdAt: -1 })
+      .limit(5);
+
+    res.status(200).json(tasks);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error fetching tasks Internal server error" });
+  }
+};
+
+export { createTask, tasks, editTask, isDoneTask, deleteTask, topDailyTasks };

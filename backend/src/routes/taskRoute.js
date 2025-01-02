@@ -8,7 +8,10 @@ import {
   topDailyTasks,
 } from "../controllers/taskController.js";
 import { auth } from "../middlewares/middleware.js";
-import { dailyTasksAnalysis } from "../controllers/analysisController.js";
+import {
+  dailyTasksAnalysis,
+  overAllTasksAnalysis,
+} from "../controllers/analysisController.js";
 
 const router = express.Router();
 
@@ -20,5 +23,6 @@ router.put("/done/:id", auth, isDoneTask);
 router.delete("/delete/:id", auth, deleteTask);
 
 router.get("/analysis/daily", auth, dailyTasksAnalysis);
+router.get("/analysis/overall", auth, overAllTasksAnalysis);
 
 export default router;

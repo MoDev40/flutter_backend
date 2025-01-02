@@ -16,7 +16,24 @@ const dailyTasksAnalysis = async (req, res) => {
     let done = 0;
     let unDone = 0;
 
-    console.log({ startOfDay, endOfDay });
+    tasks.forEach((task) => (task.isDone ? done++ : unDone++));
+
+    res.status(200).json({ done, unDone });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error fetching tasks analysis Internal server error",
+    });
+  }
+};
+const overAllTasksAnalysis = async (req, res) => {
+  try {
+    const user = req.user;
+
+    const tasks = await Task.find({ user }).sort({ createdAt: -1 });
+
+    let done = 0;
+    let unDone = 0;
+
     tasks.forEach((task) => (task.isDone ? done++ : unDone++));
 
     res.status(200).json({ done, unDone });
@@ -27,4 +44,4 @@ const dailyTasksAnalysis = async (req, res) => {
   }
 };
 
-export { dailyTasksAnalysis };
+export { dailyTasksAnalysis, overAllTasksAnalysis };

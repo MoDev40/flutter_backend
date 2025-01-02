@@ -10,7 +10,9 @@ import {
 import { auth } from "../middlewares/middleware.js";
 import {
   dailyTasksAnalysis,
+  monthlyTaskAnalysis,
   overAllTasksAnalysis,
+  overDueTask,
 } from "../controllers/analysisController.js";
 
 const router = express.Router();
@@ -24,5 +26,7 @@ router.delete("/delete/:id", auth, deleteTask);
 
 router.get("/analysis/daily", auth, dailyTasksAnalysis);
 router.get("/analysis/overall", auth, overAllTasksAnalysis);
+router.get("/analysis/overdue", auth, overDueTask);
+router.get("/analysis/month", auth, monthlyTaskAnalysis);
 
 export default router;

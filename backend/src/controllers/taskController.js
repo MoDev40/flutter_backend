@@ -71,4 +71,21 @@ const isDoneTask = async (req, res) => {
       .json({ message: "Error editing task Internal server error" });
   }
 };
-export { createTask, tasks, editTask, isDoneTask };
+
+const deleteTask = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = req.user;
+
+    await Task.findOneAndDelete({ $and: [{ user }, { _id: id }] });
+
+    res.status(200).json({ message: "Successfully deleted" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error deleting task Internal server error" });
+  }
+};
+
+export { createTask, tasks, editTask, isDoneTask, deleteTask };

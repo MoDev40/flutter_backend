@@ -1,5 +1,5 @@
 import Task from "../models/task.js";
-import { dateSpecified } from "../utils/utils.js";
+import { dateSpecified, monthSpecified } from "../utils/utils.js";
 
 const dailyTasksAnalysis = async (req, res) => {
   try {
@@ -67,7 +67,15 @@ const monthlyTaskAnalysis = async (req, res) => {
   try {
     const user = req.user;
 
-    const tasks = await Task.find({ user });
+    const { date } = req.params;
+
+    const { startOfMonth, endOfMonth } = monthSpecified(new Date(date));
+
+    const tasks = await Task.find({
+      $and: [{ user }, { createdAt: { $gte: startOfMonth, $lte: endOfMonth } }],
+    });
+
+    console.log({ startOfMonth, endOfMonth });
 
     const data = {};
 

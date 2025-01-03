@@ -19,3 +19,16 @@ export const dateSpecified = (date) => {
 
   return { startOfDay, endOfDay };
 };
+export const monthSpecified = (date) => {
+  const startOfMonth = new Date(date.getFullYear(), date.getMonth(), 2);
+  startOfMonth.setHours(0, 0, 0, 0);
+
+  const endOfMonth = new Date(
+    startOfMonth.getFullYear(),
+    startOfMonth.getMonth() + 1,
+    0
+  );
+  endOfMonth.setHours(23, 59, 59, 999);
+
+  return { startOfMonth, endOfMonth };
+};

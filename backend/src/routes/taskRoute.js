@@ -27,6 +27,6 @@ router.delete("/delete/:id", auth, deleteTask);
 router.get("/analysis/daily", auth, dailyTasksAnalysis);
 router.get("/analysis/overall", auth, overAllTasksAnalysis);
 router.get("/analysis/overdue", auth, overDueTask);
-router.get("/analysis/month", auth, monthlyTaskAnalysis);
+router.get("/analysis/month/:date", auth, monthlyTaskAnalysis);
 
 export default router;

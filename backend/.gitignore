@@ -47,3 +47,4 @@ Thumbs.db
 # Miscellaneous
 .node_repl_history
 .vscode-test
+.vercel

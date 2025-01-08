@@ -37,7 +37,7 @@ export async function loginUser(req, res) {
 
     const payload = { user: user._id };
     const token = jwt.sign(payload, jwtSecret, {
-      expiresIn: "1h",
+      expiresIn: "1d",
     });
     user.password = undefined;
     res.status(200).json({ token, user });

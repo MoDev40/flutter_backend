@@ -1,4 +1,4 @@
-import Task from "../models/task.js";
+import { Task } from "../models/task.js";
 import { dateSpecified } from "../utils/utils.js";
 
 export const createTask = async (req, res) => {

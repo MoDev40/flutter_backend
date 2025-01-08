@@ -1,7 +1,7 @@
 import Task from "../models/task.js";
 import { dateSpecified, monthSpecified } from "../utils/utils.js";
 
-const dailyTasksAnalysis = async (req, res) => {
+export const dailyTasksAnalysis = async (req, res) => {
   try {
     const user = req.user;
 
@@ -25,7 +25,7 @@ const dailyTasksAnalysis = async (req, res) => {
     });
   }
 };
-const overAllTasksAnalysis = async (req, res) => {
+export const overAllTasksAnalysis = async (req, res) => {
   try {
     const user = req.user;
 
@@ -44,7 +44,7 @@ const overAllTasksAnalysis = async (req, res) => {
   }
 };
 
-const overDueTask = async (req, res) => {
+export const overDueTask = async (req, res) => {
   try {
     const user = req.user;
     const date = new Date();
@@ -63,7 +63,7 @@ const overDueTask = async (req, res) => {
   }
 };
 
-const monthlyTaskAnalysis = async (req, res) => {
+export const monthlyTaskAnalysis = async (req, res) => {
   try {
     const user = req.user;
 
@@ -97,11 +97,4 @@ const monthlyTaskAnalysis = async (req, res) => {
       message: "Error fetching tasks analysis Internal server error",
     });
   }
-};
-
-export {
-  dailyTasksAnalysis,
-  overAllTasksAnalysis,
-  overDueTask,
-  monthlyTaskAnalysis,
 };

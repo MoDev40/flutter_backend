@@ -1,7 +1,7 @@
 import Task from "../models/task.js";
 import { dateSpecified } from "../utils/utils.js";
 
-const createTask = async (req, res) => {
+export const createTask = async (req, res) => {
   try {
     const { title, description, due } = req.body;
     const user = req.user;
@@ -18,7 +18,7 @@ const createTask = async (req, res) => {
   }
 };
 
-const tasks = async (req, res) => {
+export const tasks = async (req, res) => {
   try {
     const user = req.user;
     const tasks = await Task.find({ user }).sort({ createdAt: -1 });
@@ -31,7 +31,7 @@ const tasks = async (req, res) => {
   }
 };
 
-const editTask = async (req, res) => {
+export const editTask = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -52,7 +52,7 @@ const editTask = async (req, res) => {
   }
 };
 
-const isDoneTask = async (req, res) => {
+export const isDoneTask = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -73,7 +73,7 @@ const isDoneTask = async (req, res) => {
   }
 };
 
-const deleteTask = async (req, res) => {
+export const deleteTask = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -89,7 +89,7 @@ const deleteTask = async (req, res) => {
   }
 };
 
-const topDailyTasks = async (req, res) => {
+export const topDailyTasks = async (req, res) => {
   try {
     const user = req.user;
 
@@ -110,5 +110,3 @@ const topDailyTasks = async (req, res) => {
       .json({ message: "Error fetching tasks Internal server error" });
   }
 };
-
-export { createTask, tasks, editTask, isDoneTask, deleteTask, topDailyTasks };

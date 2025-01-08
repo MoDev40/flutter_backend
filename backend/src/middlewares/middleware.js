@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { jwtSecret } from "../config/config.js";
-function auth(req, res, next) {
+export function auth(req, res, next) {
   try {
     const token = req.header("Authorization").replace("Bearer ", "");
 
@@ -23,5 +23,3 @@ function auth(req, res, next) {
     res.status(500).json({ message: "Server error" });
   }
 }
-
-export { auth };

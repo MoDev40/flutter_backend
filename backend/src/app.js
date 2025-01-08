@@ -35,6 +35,10 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
 
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "Hello World" });
+});
+
 app.use((err, req, res, next) => {
   console.error(chalk.red(err.stack));
   res.status(err.status || 500).json({

@@ -20,6 +20,8 @@ export const createTask = async (req, res) => {
 
 export const tasks = async (req, res) => {
   try {
+    const { date } = req.params;
+    const { startOfDay, endOfDay } = dateSpecified(new Date(date));
     const user = req.user;
     const tasks = await Task.find({ user }).sort({ createdAt: -1 });
 

@@ -18,7 +18,7 @@ import {
 const router = express.Router();
 
 router.post("/create", auth, createTask);
-router.get("/", auth, tasks);
+router.get("/:date", auth, tasks);
 router.get("/top", auth, topDailyTasks);
 router.put("/edit/:id", auth, editTask);
 router.put("/done/:id", auth, isDoneTask);

@@ -23,7 +23,9 @@ export const tasks = async (req, res) => {
     const { date } = req.params;
     const { startOfDay, endOfDay } = dateSpecified(new Date(date));
     const user = req.user;
-    const tasks = await Task.find({ user }).sort({ createdAt: -1 });
+    const tasks = await Task.find({
+      $and: [{ user }, { createdAt: { $gt: startOfDay, $lte: endOfDay } }],
+    }).sort({ createdAt: -1 });
 
     res.status(200).json(tasks);
   } catch (error) {

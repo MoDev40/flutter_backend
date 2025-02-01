@@ -20,7 +20,7 @@ export const dateSpecified = (date) => {
   return { startOfDay, endOfDay };
 };
 export const monthSpecified = (date) => {
-  const startOfMonth = new Date(date.getFullYear(), date.getMonth(), 2);
+  const startOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
   startOfMonth.setHours(0, 0, 0, 0);
 
   const endOfMonth = new Date(

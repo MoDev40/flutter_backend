@@ -1,30 +1,6 @@
 import { Task } from "../models/task.js";
 import { dateSpecified, monthSpecified } from "../utils/utils.js";
 
-export const dailyTasksAnalysis = async (req, res) => {
-  try {
-    const user = req.user;
-
-    const day = new Date();
-
-    const { startOfDay, endOfDay } = dateSpecified(day);
-
-    const tasks = await Task.find({
-      $and: [{ user }, { createdAt: { $gt: startOfDay, $lte: endOfDay } }],
-    }).sort({ createdAt: -1 });
-
-    let done = 0;
-    let unDone = 0;
-
-    tasks.forEach((task) => (task.isDone ? done++ : unDone++));
-
-    res.status(200).json({ done, unDone });
-  } catch (error) {
-    res.status(500).json({
-      message: "Error fetching tasks analysis Internal server error",
-    });
-  }
-};
 export const overAllTasksAnalysis = async (req, res) => {
   try {
     const user = req.user;
@@ -72,10 +48,16 @@ export const monthlyTaskAnalysis = async (req, res) => {
     const { startOfMonth, endOfMonth } = monthSpecified(new Date(date));
 
     const tasks = await Task.find({
-      $and: [{ user }, { createdAt: { $gte: startOfMonth, $lte: endOfMonth } }],
+      $and: [
+        { user },
+        {
+          createdAt: {
+            $gte: startOfMonth,
+            $lte: endOfMonth,
+          },
+        },
+      ],
     });
-
-    console.log({ startOfMonth, endOfMonth });
 
     const data = {};
 

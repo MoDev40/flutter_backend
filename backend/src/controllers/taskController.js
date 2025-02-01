@@ -23,11 +23,17 @@ export const tasks = async (req, res) => {
     const { date } = req.params;
     const { startOfDay, endOfDay } = dateSpecified(new Date(date));
     const user = req.user;
+
     const tasks = await Task.find({
       $and: [{ user }, { createdAt: { $gt: startOfDay, $lte: endOfDay } }],
     }).sort({ createdAt: -1 });
 
-    res.status(200).json(tasks);
+    let done = 0;
+    let unDone = 0;
+
+    tasks.forEach((task) => (task.isDone ? done++ : unDone++));
+
+    res.status(200).json({ tasks, done, unDone });
   } catch (error) {
     res
       .status(500)
@@ -90,27 +96,5 @@ export const deleteTask = async (req, res) => {
     res
       .status(500)
       .json({ message: "Error deleting task Internal server error" });
-  }
-};
-
-export const topDailyTasks = async (req, res) => {
-  try {
-    const user = req.user;
-
-    const day = new Date();
-
-    const { startOfDay, endOfDay } = dateSpecified(day);
-
-    const tasks = await Task.find({
-      $and: [{ user }, { createdAt: { $gt: startOfDay, $lte: endOfDay } }],
-    })
-      .sort({ createdAt: -1 })
-      .limit(5);
-
-    res.status(200).json(tasks);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error fetching tasks Internal server error" });
   }
 };
